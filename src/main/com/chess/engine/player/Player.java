@@ -1,7 +1,9 @@
 package main.com.chess.engine.player;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import main.com.chess.engine.common.Position;
+import main.com.chess.engine.common.Side;
 import main.com.chess.engine.moves.MoveStatus;
 import main.com.chess.engine.moves.MoveTransition;
 import main.com.chess.engine.board.Board;
@@ -43,7 +45,10 @@ public abstract class Player {
   public Player(final Board board, final Collection<Move> playerLegalMoves, final Collection<Move> opponentLegalMoves) {
     this.gameBoard = board;
     this.king = initPlayerKing();
-    this.playerLegalMoves = playerLegalMoves;
+    this.playerLegalMoves = ImmutableList.copyOf(
+                                                  Iterables.concat(playerLegalMoves,
+                                                  getAllCastlingMoves(playerLegalMoves, opponentLegalMoves))
+                                                );
     this.inCheck = !getAllAttackOnSquare(this.king.getPosition(), opponentLegalMoves).isEmpty();
   }
 
@@ -200,4 +205,13 @@ public abstract class Player {
    * @return The opponent player.
    */
   public abstract Player getOpponent();
+
+  /**
+   * Retrieves the player side
+   * @return The player side {@code white, black}
+   */
+  public abstract Side getSide();
+
+  public abstract Collection<Move> getAllCastlingMoves(final Collection<Move> playerLegalMoves,
+                                                              final Collection<Move> opponentLegalMoves);
 }
