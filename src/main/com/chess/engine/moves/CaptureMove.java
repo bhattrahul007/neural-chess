@@ -1,5 +1,6 @@
 package main.com.chess.engine.moves;
 
+import main.com.chess.engine.board.Board;
 import main.com.chess.engine.pieces.Piece;
 
 /**
@@ -33,6 +34,11 @@ public class CaptureMove extends Move {
   @Override
   public Piece getCapturedPiece() {
     return capturedPiece;
+  }
+
+  @Override
+  public Board execute() {
+    return null;
   }
 }
 
