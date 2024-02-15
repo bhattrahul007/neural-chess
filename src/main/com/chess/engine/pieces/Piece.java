@@ -34,6 +34,12 @@ public interface Piece {
   public PieceType getType();
 
   /**
+   * checks whether the piece have moved from its starting position.
+   * @return true if piece have moved false otherwise
+   * */
+  public boolean hasMoved();
+
+  /**
    * Calculates the legal moves for the piece on the specified board.
    * The legality of moves is determined based on the current state of the board,
    * including the positions of other pieces and game rules.
