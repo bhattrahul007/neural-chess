@@ -49,5 +49,12 @@ public interface Piece {
    */
   public Collection<Move> generateAllMoves(final Board board);
 
+  /**
+   * Executes the given move and returns the piece that was moved.
+   *
+   * @param move The move to execute.
+   * @return The piece that was moved.
+   */
+  public Piece move(Move move);
 }
 
