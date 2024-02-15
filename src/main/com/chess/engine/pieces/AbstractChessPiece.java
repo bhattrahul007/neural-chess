@@ -59,6 +59,38 @@ public abstract class AbstractChessPiece implements Piece {
     this.moved = moved;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Position getPosition() {
+    return position;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Side getSide() {
+    return side;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public PieceType getType() {
+    return type;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasMoved() {
+    return moved;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
