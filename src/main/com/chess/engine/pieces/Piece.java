@@ -47,7 +47,7 @@ public interface Piece {
    * @param board The board on which to calculate the moves.
    * @return A Collection of legal moves that the piece can make on the board.
    */
-  public Collection<Move> generateMoves(final Board board);
+  public Collection<Move> generateAllMoves(final Board board);
 
 }
 
