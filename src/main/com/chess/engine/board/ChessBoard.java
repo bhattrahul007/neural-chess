@@ -3,27 +3,39 @@ package main.com.chess.engine.board;
 import com.google.common.collect.ImmutableList;
 import main.com.chess.engine.common.Position;
 import main.com.chess.engine.common.Side;
+import main.com.chess.engine.moves.Move;
 import main.com.chess.engine.pieces.*;
+import main.com.chess.engine.player.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the chess board.
  */
 public class ChessBoard implements Board {
   private final List<BoardSquare> squares;
+  private final Collection<Piece> wpieces;
+  private final Collection<Piece> bpieces;
+
+  private final Player wplayer;
+  private final Player bplayer;
+
+  private final Player currentPlayer;
 
   private ChessBoard(Builder builder) {
     this.squares = initChessBoardSquares(builder);
+    this.wpieces = collectAllPiecesOnBoardForSide(squares, Side.WHITE);
+    this.bpieces = collectAllPiecesOnBoardForSide(squares, Side.BLACK);
+
+    final Collection<Move> wLegalMoves = collectAllMovesByPieces(wpieces);
+    final Collection<Move> bLegalMoves = collectAllMovesByPieces(bpieces);
+    this.wplayer = new WhitePlayer(this, wLegalMoves, bLegalMoves);
+    this.bplayer = new BlackPlayer(this, bLegalMoves, wLegalMoves);
+    this.currentPlayer = builder.nextMoveMaker.choosePlayer(wplayer, bplayer);
   }
 
   /**
-   * Retrieves the square at the specified position on the board.
-   *
-   * @param pos The position of the square to retrieve.
-   * @return The board square at the specified position.
+   * {@inheritDoc}
    */
   @Override
   public BoardSquare getSquare(Position pos) {
@@ -32,6 +44,43 @@ public class ChessBoard implements Board {
     }catch(IndexOutOfBoundsException e){
       return null;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<Piece> getAllActiveWhitePieces(){
+    return this.wpieces;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<Piece> getAllActiveBlackPieces(){
+    return this.bpieces;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Player getWhitePlayer(){
+    return wplayer;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Player getBlackPlayer(){
+    return bplayer;
+  }
+
+  @Override
+  public Player getCurrentPlayer(){
+    return currentPlayer;
   }
 
   /**
@@ -99,6 +148,38 @@ public class ChessBoard implements Board {
     builder.setNextMoveMaker(Side.WHITE);
 
     return builder.build();
+  }
+
+  /**
+   * Collects all pieces on the board for a specific side.
+   *
+   * @param squares The list of board squares representing the chessboard.
+   * @param side    The side for which to collect pieces.
+   * @return A collection of pieces belonging to the specified side.
+   */
+  public Collection<Piece> collectAllPiecesOnBoardForSide(final List<BoardSquare> squares, final Side side){
+    final List<Piece> pieces = new ArrayList<>();
+    for(final BoardSquare square: squares){
+      Piece occupiedBy = square.getOccupiedBy();
+      if(!square.isEmpty() && occupiedBy.getSide() == side){
+        pieces.add(occupiedBy);
+      }
+    }
+    return ImmutableList.copyOf(pieces);
+  }
+
+  /**
+   * Collects all moves made by the given collection of pieces.
+   *
+   * @param pieces The collection of pieces for which to collect moves.
+   * @return A collection of all moves made by the given pieces.
+   */
+  public Collection<Move> collectAllMovesByPieces(final Collection<Piece> pieces){
+    List<Move> moves = new ArrayList<>();
+    for(final Piece piece: pieces){
+      moves.addAll(piece.generateAllMoves(this));
+    }
+    return ImmutableList.copyOf(moves);
   }
 
   /**
