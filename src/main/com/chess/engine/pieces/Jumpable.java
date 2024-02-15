@@ -4,7 +4,7 @@ import main.com.chess.engine.common.Position;
 
 public interface Jumpable {
 
-  /** Logic to determine if the knight can jump to the specified square
+  /** Logic to determine if the piece can jump to the specified square
    * implementation based on the current position and the offset
    * @return  true if the jump is possible, false otherwise
    */

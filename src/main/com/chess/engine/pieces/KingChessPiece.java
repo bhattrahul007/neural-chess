@@ -15,36 +15,36 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents a knight chess piece.
+ * Represents a King chess piece.
  */
-public class KnightChessPiece extends AbstractChessPiece implements Jumpable {
-  // Constants representing possible knight moves
-  private static final int OFFSET_TOP_LEFT = -17;
-  private static final int OFFSET_TOP_RIGHT = -15;
-  private static final int OFFSET_LEFT_TOP = -10;
-  private static final int OFFSET_RIGHT_TOP = -6;
-  private static final int OFFSET_LEFT_BOTTOM = 6;
-  private static final int OFFSET_RIGHT_BOTTOM = 10;
-  private static final int OFFSET_BOTTOM_LEFT = 15;
-  private static final int OFFSET_BOTTOM_RIGHT = 17;
+public class KingChessPiece extends AbstractChessPiece implements Jumpable {
+  // Constants representing possible King moves
+  private static final int OFFSET_TOP_LEFT = -9;
+  private static final int OFFSET_TOP = -8;
+  private static final int OFFSET_TOP_RIGHT = -7;
+  private static final int OFFSET_LEFT = -1;
+  private static final int OFFSET_RIGHT = 1;
+  private static final int OFFSET_BOTTOM_LEFT = 7;
+  private static final int OFFSET_BOTTOM = 8;
+  private static final int OFFSET_BOTTOM_RIGHT = 9;
 
   private static final int[] OFFSETS = {
-    OFFSET_TOP_LEFT, OFFSET_TOP_RIGHT, OFFSET_LEFT_TOP, OFFSET_RIGHT_TOP,
-    OFFSET_LEFT_BOTTOM, OFFSET_RIGHT_BOTTOM, OFFSET_BOTTOM_LEFT, OFFSET_BOTTOM_RIGHT
+    OFFSET_TOP_LEFT, OFFSET_TOP, OFFSET_TOP_RIGHT, OFFSET_LEFT, OFFSET_RIGHT,
+    OFFSET_BOTTOM_LEFT, OFFSET_BOTTOM, OFFSET_BOTTOM_RIGHT
   };
 
   /**
-   * Constructs a knight chess piece with the given position and side.
+   * Constructs a King chess piece with the given position and side.
    *
-   * @param position The position of the knight on the board.
-   * @param side     The side (color) of the knight.
+   * @param position The position of the King on the board.
+   * @param side     The side (color) of the King.
    */
-  public KnightChessPiece(Position position, Side side) {
-    super(position, side, PieceType.KNIGHT);
+  public KingChessPiece(Position position, Side side) {
+    super(position, side, PieceType.KING);
   }
 
-  public KnightChessPiece(Position position, Side side, boolean moved) {
-    super(position, side, PieceType.KNIGHT, moved);
+  public KingChessPiece(Position position, Side side, boolean moved) {
+    super(position, side, PieceType.KING, moved);
   }
 
   /**
@@ -54,15 +54,9 @@ public class KnightChessPiece extends AbstractChessPiece implements Jumpable {
   public boolean canJumpToSquareFromCurrentPosition(final Position currPos, final int offset) {
     int colIndex = BoardUtils.getColumnIndexFromPosition(currPos);
 
-    if(colIndex == 0 && ( offset == OFFSET_TOP_LEFT || offset == OFFSET_LEFT_TOP ||
-                          offset == OFFSET_LEFT_BOTTOM || offset == OFFSET_BOTTOM_LEFT)) return false;
-
-    else if (colIndex == 1 && (offset == OFFSET_LEFT_TOP || offset == OFFSET_LEFT_BOTTOM)) return false;
-
-    else if (colIndex == 6 && (offset == OFFSET_RIGHT_BOTTOM || offset == OFFSET_RIGHT_TOP)) return false;
-
-    else return colIndex != 7 || (offset != OFFSET_BOTTOM_RIGHT && offset != OFFSET_RIGHT_BOTTOM &&
-                                  offset != -OFFSET_RIGHT_TOP && offset != -OFFSET_TOP_RIGHT);
+    if(colIndex == 0 && (offset == OFFSET_TOP_LEFT || offset == OFFSET_LEFT || offset == OFFSET_BOTTOM_LEFT)) return false;
+    if(colIndex == 7 && (offset == OFFSET_TOP_RIGHT || offset == OFFSET_RIGHT || offset == OFFSET_BOTTOM_RIGHT)) return false;
+    return true;
   }
 
   /**
@@ -76,7 +70,7 @@ public class KnightChessPiece extends AbstractChessPiece implements Jumpable {
       Position currPos = this.position;
       Position computedPos = new Position(currPos.getX() + offset);
 
-      // Check if the square is valid and if the knight can jump to it
+      // Check if the square is valid and if the King can jump to it
       if (BoardUtils.isSquareValidInBoard(computedPos) && canJumpToSquareFromCurrentPosition(currPos, offset)) {
         final BoardSquare computedSquare = BoardUtils.getSquare(board, computedPos);
 
