@@ -1,5 +1,7 @@
 package main.com.chess.engine.common;
 
+import main.com.chess.engine.player.Player;
+
 /**
  * An enumeration representing the two sides in chess: White and Black.
  * Each side has methods to determine whether it represents White or Black.
@@ -19,6 +21,11 @@ public enum Side {
     }
 
     @Override
+    public Player choosePlayer(final Player white, final Player black){
+      return black;
+    }
+
+    @Override
     public String toString(){
       return "W";
     }
@@ -34,6 +41,11 @@ public enum Side {
     @Override
     public boolean isBlack() {
       return true;
+    }
+
+    @Override
+    public Player choosePlayer(final Player white, final Player black){
+      return white;
     }
 
     @Override
@@ -59,5 +71,7 @@ public enum Side {
   public boolean isBlack() {
     return false;
   }
+
+  public abstract Player choosePlayer(final Player white, final Player black);
 }
 

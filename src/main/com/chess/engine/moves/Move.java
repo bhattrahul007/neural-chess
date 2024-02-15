@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Represents a move in a chess game.
  */
-public abstract class Move {
+public abstract class Move implements MoveExecutor{
   private final Position origin;
   private final Piece movingPiece;
   private final Position destination;

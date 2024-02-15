@@ -1,5 +1,6 @@
 package main.com.chess.engine.moves;
 
+import main.com.chess.engine.board.Board;
 import main.com.chess.engine.common.Position;
 import main.com.chess.engine.pieces.Piece;
 
@@ -30,6 +31,11 @@ public class MajorMove extends Move{
    */
   @Override
   public Piece getCapturedPiece() {
+    return null;
+  }
+
+  @Override
+  public Board execute() {
     return null;
   }
 }
