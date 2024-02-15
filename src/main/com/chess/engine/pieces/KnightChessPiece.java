@@ -9,12 +9,12 @@ import java.util.Collection;
 
 public class KnightChessPiece extends AbstractChessPiece{
 
-  protected KnightChessPiece(Position position, Side side) {
+  public KnightChessPiece(Position position, Side side) {
     super(position, side, PieceType.KNIGHT);
   }
 
 
-  protected KnightChessPiece(Position position, Side side, boolean moved) {
+  public KnightChessPiece(Position position, Side side, boolean moved) {
     super(position, side, PieceType.KNIGHT, moved);
   }
 
