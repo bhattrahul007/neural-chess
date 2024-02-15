@@ -20,6 +20,7 @@ public abstract class Move {
    * @param destination The destination position of the move.
    */
   public Move(final Piece movingPiece, final Position destination) {
+    assert movingPiece != null;
     this.origin = movingPiece.getPosition();
     this.movingPiece = movingPiece;
     this.destination = destination;
