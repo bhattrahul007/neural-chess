@@ -23,12 +23,12 @@ public class PawnChessPiece extends AbstractChessPiece implements Jumpable{
   private static final int BOTTOM_RIGHT = 9;
   private static final int[] OFFSETS = {BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT};
 
-  protected PawnChessPiece(Position position, Side side, PieceType type) {
-    super(position, side, type);
+  public PawnChessPiece(Position position, Side side) {
+    super(position, side, PieceType.PAWN);
   }
 
-  protected PawnChessPiece(Position position, Side side, PieceType type, boolean moved) {
-    super(position, side, type, moved);
+  public PawnChessPiece(Position position, Side side, boolean moved) {
+    super(position, side, PieceType.PAWN, moved);
   }
 
   /**
