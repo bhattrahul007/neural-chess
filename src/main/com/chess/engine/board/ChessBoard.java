@@ -1,6 +1,7 @@
 package main.com.chess.engine.board;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import main.com.chess.engine.common.Position;
 import main.com.chess.engine.common.Side;
 import main.com.chess.engine.moves.Move;
@@ -183,6 +184,14 @@ public class ChessBoard implements Board {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Iterable<Move> getAllLegalMoves(){
+    return Iterables.unmodifiableIterable(Iterables.concat(wplayer.getAllLegalMoves(), bplayer.getAllLegalMoves()));
+  }
+
+  /**
    * Creates a new instance of the ChessBoard.Builder.
    *
    * @return A new ChessBoard builder.
@@ -215,6 +224,7 @@ public class ChessBoard implements Board {
   public static class Builder {
     private final Map<Integer, Piece> pieces;
     private Side nextMoveMaker;
+    private Piece enPassant;
 
     /**
      * Constructs a new ChessBoard builder.
@@ -242,6 +252,11 @@ public class ChessBoard implements Board {
      */
     public Builder setPiece(final Piece piece) {
       this.pieces.put(piece.getPosition().getX(), piece);
+      return this;
+    }
+
+    public Builder setEnPassant(final Piece piece){
+      this.enPassant = piece;
       return this;
     }
 
