@@ -1,6 +1,7 @@
 package main.com.chess.engine.moves;
 
 import main.com.chess.engine.board.Board;
+import main.com.chess.engine.board.ChessBoard;
 import main.com.chess.engine.pieces.Piece;
 
 /**
@@ -15,8 +16,8 @@ public class CaptureMove extends Move {
    * @param attackingPiece The piece making the capture move.
    * @param capturedPiece  The piece being captured.
    */
-  public CaptureMove(final Piece attackingPiece, final Piece capturedPiece) {
-    super(attackingPiece, capturedPiece.getPosition());
+  public CaptureMove(final Board board, final Piece attackingPiece, final Piece capturedPiece) {
+    super(board, attackingPiece, capturedPiece.getPosition());
     this.capturedPiece = capturedPiece;
   }
 
@@ -38,7 +39,24 @@ public class CaptureMove extends Move {
 
   @Override
   public Board execute() {
-    return null;
+    ChessBoard.Builder builder = ChessBoard.builder();
+    // place all the non-attacking current player pieces
+    for(final Piece piece: board.getCurrentPlayer().getAllActivePieces()){
+      if(!movingPiece.equals(piece)){
+        builder.setPiece(piece);
+      }
+    }
+    // place all the pieces except for the captured one for opponent
+    for(final Piece piece: board.getCurrentPlayer().getOpponent().getAllActivePieces()){
+      if(!capturedPiece.equals(piece)){
+        builder.setPiece(piece);
+      }
+    }
+    // place the attacking piece into the location of captured piece
+    builder.setPiece(movingPiece.move(this));
+    // change the player turn
+    builder.setNextMoveMaker(board.getCurrentPlayer().getOpponent().getSide());
+    return builder.build();
   }
 }
 

@@ -76,17 +76,25 @@ public class KingChessPiece extends AbstractChessPiece implements Jumpable {
 
         if (computedSquare.isEmpty()) {
           // Add move for an empty square
-          moves.add(new MajorMove(this, computedPos));
+          moves.add(new MajorMove(board, this, computedPos));
         } else {
           // Add move for capturing opponent's piece
           final Piece computedSquarePiece = computedSquare.getOccupiedBy();
           final Side computedSquarePieceSide = computedSquarePiece.getSide();
           if (side != computedSquarePieceSide) {
-            moves.add(new CaptureMove(this, computedSquarePiece));
+            moves.add(new CaptureMove(board,this, computedSquarePiece));
           }
         }
       }
     }
     return ImmutableSet.copyOf(moves);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public KingChessPiece move(final Move move){
+    return new KingChessPiece(move.getDestination(), move.getMovingPiece().getSide(), true);
   }
 }

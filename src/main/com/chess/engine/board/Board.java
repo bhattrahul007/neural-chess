@@ -1,6 +1,7 @@
 package main.com.chess.engine.board;
 
 import main.com.chess.engine.common.Position;
+import main.com.chess.engine.moves.Move;
 import main.com.chess.engine.pieces.Piece;
 import main.com.chess.engine.player.Player;
 
@@ -48,4 +49,10 @@ public interface Board {
   public Player getBlackPlayer();
 
   public Player getCurrentPlayer();
+
+  /**
+   * Retrieves all the move that can be played by both the players on board.
+   * @return The collection of moves.
+   */
+  public Iterable<Move> getAllLegalMoves();
 }

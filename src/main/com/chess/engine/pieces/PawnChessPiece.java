@@ -61,7 +61,7 @@ public class PawnChessPiece extends AbstractChessPiece implements Jumpable{
         final BoardSquare computedSquare = BoardUtils.getSquare(board, computedPos);
 
         if(offset == BOTTOM && computedSquare.isEmpty()){
-          moves.add(new MajorMove(this, computedPos));
+          moves.add(new MajorMove(board,this, computedPos));
 
           // check for double pawn which is only possible if lower square is empty
           // double jump square is empty
@@ -69,7 +69,7 @@ public class PawnChessPiece extends AbstractChessPiece implements Jumpable{
           final Position doubleComputedPos = new Position(computedPos.getX() + pawnMovingOffset);
           final BoardSquare doubleComputedSquare = BoardUtils.getSquare(board, doubleComputedPos);
           if(!moved && doubleComputedSquare != null && doubleComputedSquare.isEmpty()){
-            moves.add(new MajorMove(this, doubleComputedPos));
+            moves.add(new MajorMove(board, this, doubleComputedPos));
           }
         }
         else if (!computedSquare.isEmpty()){
@@ -78,12 +78,20 @@ public class PawnChessPiece extends AbstractChessPiece implements Jumpable{
           final Piece computedSquarePiece = computedSquare.getOccupiedBy();
           final Side computedSquarePieceSide = computedSquarePiece.getSide();
           if(side != computedSquarePieceSide){
-            moves.add(new CaptureMove(this, computedSquarePiece));
+            moves.add(new CaptureMove(board, this, computedSquarePiece));
           }
         }
       }
     }
 
     return ImmutableSet.copyOf(moves);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public PawnChessPiece move(final Move move){
+    return new PawnChessPiece(move.getDestination(), move.getMovingPiece().getSide(), true);
   }
 }

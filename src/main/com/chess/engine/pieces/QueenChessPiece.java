@@ -69,14 +69,14 @@ public class QueenChessPiece extends AbstractChessPiece implements Jumpable {
         // if square at offset from current position is empty then
         // add it as progression move
         if(computedSquare.isEmpty()){
-          moves.add(new MajorMove(this, computedPos));
+          moves.add(new MajorMove(board, this, computedPos));
         }else{
           // if the square at offset from current position is not empty then
           // only add move if the piece on that square if of different side
           final Piece computedSquarePiece = computedSquare.getOccupiedBy();
           final Side computedSquarePieceSide = computedSquarePiece.getSide();
           if(side != computedSquarePieceSide){
-            moves.add(new CaptureMove(this, computedSquarePiece));
+            moves.add(new CaptureMove(board, this, computedSquarePiece));
           }
           // break out of recursive offset loop because the subsequent squares are blocked
           // by same or different side
@@ -89,5 +89,13 @@ public class QueenChessPiece extends AbstractChessPiece implements Jumpable {
     }
 
     return ImmutableSet.copyOf(moves);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public QueenChessPiece move(final Move move){
+    return new QueenChessPiece(move.getDestination(), move.getMovingPiece().getSide(), true);
   }
 }
