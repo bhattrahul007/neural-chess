@@ -6,6 +6,8 @@ import main.com.chess.engine.board.BoardSquare;
 import main.com.chess.engine.board.BoardUtils;
 import main.com.chess.engine.common.Position;
 import main.com.chess.engine.common.Side;
+import main.com.chess.engine.moves.CaptureMove;
+import main.com.chess.engine.moves.MajorMove;
 import main.com.chess.engine.moves.Move;
 
 import java.util.Collection;
@@ -80,13 +82,13 @@ public class KnightChessPiece extends AbstractChessPiece implements Jumpable {
 
         if (computedSquare.isEmpty()) {
           // Add move for an empty square
-          moves.add(null); // Replace null with actual move implementation
+          moves.add(new MajorMove(this, computedPos)); // Replace null with actual move implementation
         } else {
           // Add move for capturing opponent's piece
           final Piece computedSquarePiece = computedSquare.getOccupiedBy();
           final Side computedSquarePieceSide = computedSquarePiece.getSide();
           if (side != computedSquarePieceSide) {
-            moves.add(null); // Replace null with actual move implementation
+            moves.add(new CaptureMove(this, computedSquarePiece)); // Replace null with actual move implementation
           }
         }
       }
