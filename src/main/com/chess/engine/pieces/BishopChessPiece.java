@@ -14,6 +14,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Represents the {@code Bishop} piece in our chess game.
+ */
 public class BishopChessPiece extends AbstractChessPiece implements Jumpable {
   private static final int OFFSET_TOP_LEFT = -9;
   private static final int OFFSET_TOP_RIGHT = -7;
@@ -29,6 +32,9 @@ public class BishopChessPiece extends AbstractChessPiece implements Jumpable {
     super(position, side, PieceType.BISHOP, moved);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean canJumpToSquareFromCurrentPosition(Position currPos, int offset) {
     int colIndex = BoardUtils.getColumnIndexFromPosition(currPos);
@@ -39,6 +45,9 @@ public class BishopChessPiece extends AbstractChessPiece implements Jumpable {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Collection<Move> generateAllMoves(Board board) {
     Set<Move> moves = new HashSet<>();
