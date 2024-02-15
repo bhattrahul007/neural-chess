@@ -1,6 +1,7 @@
 package main.com.chess.engine.moves;
 
 import main.com.chess.engine.board.Board;
+import main.com.chess.engine.board.ChessBoard;
 import main.com.chess.engine.common.Position;
 import main.com.chess.engine.pieces.Piece;
 
@@ -14,28 +15,7 @@ public class MajorMove extends Move{
    * @param movingPiece The piece making the move.
    * @param destination The destination position of the move.
    */
-  public MajorMove(Piece movingPiece, Position destination) {
-    super(movingPiece, destination);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isCapturingMove() {
-    return false;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Piece getCapturedPiece() {
-    return null;
-  }
-
-  @Override
-  public Board execute() {
-    return null;
+  public MajorMove(final Board board, final Piece movingPiece, final Position destination) {
+    super(board, movingPiece, destination);
   }
 }
