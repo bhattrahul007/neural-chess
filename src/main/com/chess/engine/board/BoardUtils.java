@@ -7,8 +7,8 @@ import main.com.chess.engine.common.Position;
  */
 public class BoardUtils {
 
-  private static final int BOARD_ROWS = 8;
-  private static final int BOARD_COLS = 8;
+  public static final int BOARD_ROWS = 8;
+  public static final int BOARD_COLS = 8;
 
   /**
    * Checks if a given position is within the bounds of the chess board.
